@@ -3,9 +3,9 @@
 /**
  * Module dependencies.
  */
-const app = require('../index');
+const app = require('../src/index');
 const http = require('http');
-const { makeRegisterWSUpgradeHandler } = require('../websocket');
+const { makeRegisterWSUpgradeHandler } = require('../src/websocket');
 const registerWSUpgradeHandler = makeRegisterWSUpgradeHandler('/chat');
 
 /**
