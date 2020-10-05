@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: calc(100% - var(--header-height));
+  padding: 10px 15px;
 }
 
 .chat-list {
@@ -15,6 +16,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
   padding-left: 25px;
   padding-right: 50px;
   padding-bottom: 3px;
@@ -26,6 +28,7 @@
     z-index: 2;
     background: white;
     background-color: #eee;
+    max-width: 200px;
   }
   &--self {
     padding-left: 50px;
@@ -43,6 +46,7 @@
       font-size: 0.75rem;
       background: none;
       color: #ccc;
+      max-width: 100%;
     }
   }
 }
@@ -64,10 +68,9 @@
   scrollbar-width: thin;
   flex-grow: 2;
   z-index: 2;
-  outline: var(--default-border);
   .tab {
     min-width: 70px;
-    border-left: var(--default-border);
+    border-left: 1px solid #ccc;
     display: flex;
     padding-left: var(--padding-sm);
     align-items: center;
@@ -90,7 +93,6 @@
 
 .join-chat {
   height: calc(100% - var(--header-height));
-  border-top: var(--default-border);
   display: flex;
   flex-direction: column;
   justify-content: center;

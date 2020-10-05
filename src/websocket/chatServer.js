@@ -13,7 +13,7 @@ function makeChatServer(server) {
 
 function onConnection(socket) {
   socket.on('close', onClose(socket));
-  socket.on('message', makeOnMessage(MessageTypeHandler));
+  socket.on('message', makeOnMessage(MessageTypeHandler, socket));
 }
 
 function onClose(socket) { 
@@ -22,19 +22,19 @@ function onClose(socket) {
   }
 }
 
-function makeOnMessage(messageHandlers) {
+function makeOnMessage(messageHandlers, socket) {
   return function onMessage(data) {
     const { type, ...payload } = JSON.parse(data);
     const handler = messageHandlers[type];
     if (handler) {
-      handler(payload)
+      handler(payload, socket)
     }
   }
 }
 
 const MessageTypeHandler = {
   message: makeMessageHandler(wsClientsManager),
-  setIdentifier: makeSetIdentifierHandler(MissedMessageHandler),
+  setIdentifier: makeSetIdentifierHandler(wsClientsManager, MissedMessageHandler),
 }
 
 function makeMessageHandler(clientsManager) {
@@ -49,14 +49,15 @@ function makeMessageHandler(clientsManager) {
     }
     
     const timestamp = Date.now();
-    // send to receipent
-    clientsManager.sendTo(
-      to, from, JSON.stringify({ type: 'message', from, to, message, timestamp })
-    );
     
     // ping back to sender
     clientsManager.sendTo(
       from, from, JSON.stringify({ type: 'message-loopback', from, to, message, timestamp })
+    );
+
+    // send to receipent
+    clientsManager.sendTo(
+      to, from, JSON.stringify({ type: 'message', from, to, message, timestamp })
     );
   }
 }
@@ -70,7 +71,7 @@ function makeSetIdentifierHandler(clientsManager, missedMessageHandler) {
     clientsManager.add(client);
   
     // ack setIdentifier success
-    clientsManager.sendTo(identifier, JSON.stringify({ type: 'setIdentifier', identifier: identifier }));
+    clientsManager.sendTo(identifier, 'server', JSON.stringify({ type: 'setIdentifier', identifier: identifier }));
   
     // check if there are any missed messages, if so redeliver all
     const missedMessages = missedMessageHandler.getInstance();
@@ -90,7 +91,7 @@ module.exports = {
   makeChatServer,
   onConnection,
   onClose,
-  onMessage: makeOnMessage,
+  makeOnMessage,
   makeMessageHandler,
   makeSetIdentifierHandler,
 };

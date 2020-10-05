@@ -1,6 +1,6 @@
 const Emitter = require('events');
 const WSClient = require('./WSClient');
-const { makeChatServer, onConnection, onMessage, makeMessageHandler, makeSetIdentifierHandler } = require('./chatServer');
+const { makeChatServer, onConnection, makeOnMessage, makeMessageHandler, makeSetIdentifierHandler } = require('./chatServer');
 
 class MockChatServer extends Emitter {
   constructor() {
@@ -41,14 +41,15 @@ describe("chat server", () => {
     });
     
     it('should call message handler based on data\'s type', () => {
-      const handler = onMessage(mockMessageHandlers);
+      const mockSocket = {}
+      const handler = makeOnMessage(mockMessageHandlers, mockSocket);
       const mockMessage = JSON.stringify({ type: 'message', payload: 'test' });
       handler(mockMessage);
-      expect(mockMessageHandlers.message).toBeCalledWith({ payload: 'test' });
+      expect(mockMessageHandlers.message).toBeCalledWith({ payload: 'test' }, mockSocket);
     });
 
     it('should ignore invalid type', () => {
-      const handler = onMessage(mockMessageHandlers);
+      const handler = makeOnMessage(mockMessageHandlers);
       const mockMessage = JSON.stringify({ type: 'invalid', payload: 'test' });
       handler(mockMessage);
       expect(mockMessageHandlers.message).not.toBeCalled();
@@ -96,7 +97,7 @@ describe("chat server", () => {
       setIdentifierHandler(payload, mockSocket);
 
       expect(mockClientsManager.add).toBeCalledWith(expect.any(WSClient));
-      expect(mockClientsManager.sendTo).toBeCalledWith(payload.identifier, expect.any(String));
+      expect(mockClientsManager.sendTo).toBeCalledWith(payload.identifier, 'server', expect.any(String));
     });
 
     it('should call redeliver method if hasMessageFor method call returns true', () => {

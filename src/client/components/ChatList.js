@@ -11,7 +11,7 @@ export default function ChatList({ from, currentChat }) {
     }
   }
 
-  useLayoutEffect(scrollToBottom, [currentChat]);
+  useLayoutEffect(scrollToBottom, [currentChat.length]);
   return (
     <div className="chat-list" ref={list}>
       {currentChat.map(chat => 
@@ -21,7 +21,7 @@ export default function ChatList({ from, currentChat }) {
           from={from}
         />
       )}
-      <div ref={listBottom}></div>
+      <div className="chat-btm" ref={listBottom} key="bottom"></div>
     </div>
   )
 }

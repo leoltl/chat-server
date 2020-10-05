@@ -10,13 +10,7 @@ export default function App() {
   return (
     <>
       {expanded ? (
-          <ChatWindow 
-            setExpanded={setExpanded} 
-            state={state} 
-            setIdentifier={setIdentifier}
-            sendMessage={sendMessage}
-            setChatWith={setChatWith}
-          />
+          <ChatWindow {...{setExpanded, state, setIdentifier, sendMessage, setChatWith}} />
         ) : (
           <div className="launcher" onClick={() => setExpanded(!expanded)}></div>
         )

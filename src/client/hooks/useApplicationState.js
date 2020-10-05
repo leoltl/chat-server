@@ -12,12 +12,14 @@ function connectChat(url) {
 }
 
 function reducer(state, action) {
-  const {unread} = state;
+  const { unread } = state;
   switch(action.type) {
     case 'setIdentifier':
       return {...state, identifier: action.payload.identifier };
     case 'message':
-      unread.add(action.payload.from)
+      if (state.chatWith !== action.payload.from) {
+        unread.add(action.payload.from)
+      }
       return {...state, [action.payload.from]: [...(state[action.payload.from] || []), action.payload ] }
     case 'message-loopback':
       return {...state, [action.payload.to]: [...(state[action.payload.to] || []), action.payload ] }
