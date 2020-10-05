@@ -12,3 +12,11 @@
 Technologies
 
 Express, React, ws, webpack, babel, sass, jest
+
+start the app by:
+
+npm install
+
+npm start
+
+react app bundle is already built.
