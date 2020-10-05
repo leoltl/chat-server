@@ -9,11 +9,11 @@ class MissedMessageHandler {
     this.store[to].push(payload);
   }
 
-  redeliver(identifier, socket) {
+  redeliver(identifier, client) {
     const missedMessagesList = this.store[identifier] 
     if (missedMessagesList) {
         missedMessagesList.forEach((payload) => {
-          socket.send(payload)
+          client.send(payload)
         });
       delete this.store[identifier]
     }
@@ -29,6 +29,7 @@ class MissedMessageHandler {
 }
 
 module.exports = {
+  MissedMessageHandler,
   instance: null,
   getInstance() {
     if (!this.instance) {
