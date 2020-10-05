@@ -5,8 +5,12 @@
  */
 const app = require('../src/index');
 const http = require('http');
+const MessageStore = require('../src/store').getInstance();
 const { makeRegisterWSUpgradeHandler } = require('../src/websocket');
 const registerWSUpgradeHandler = makeRegisterWSUpgradeHandler('/chat');
+
+// initialize message store
+MessageStore.init();
 
 /**
  * Get port from environment and store in Express.
@@ -28,7 +32,6 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
 /**
  * Register WS Upgrade request handler
  */

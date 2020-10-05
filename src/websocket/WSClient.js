@@ -6,7 +6,6 @@ class WSClient {
 
   send(payload) {
     this.socket.send(payload);
-    // add db call below if we need to persist message here in the future.
   }
 
   match(socket) {

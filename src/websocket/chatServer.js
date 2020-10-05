@@ -3,6 +3,8 @@ const { Server } = require('ws');
 const WSClient = require('./WSClient');
 const WSClientsManager = require('./WSClientsManager');
 const MissedMessageHandler = require('./MissedMessageHandler');
+const { HOST } = require('../client/constants');
+const messageStore = require('../store').getInstance();
 
 const wsClientsManager = WSClientsManager();
 
@@ -59,6 +61,10 @@ function makeMessageHandler(clientsManager) {
     clientsManager.sendTo(
       to, from, JSON.stringify({ type: 'message', from, to, message, timestamp })
     );
+
+    // persist chat
+    const chatWith = to === HOST ? from : to;
+    messageStore.save(chatWith, JSON.stringify({ type: 'message', from, to, message, timestamp }));
   }
 }
 
@@ -74,13 +80,12 @@ function makeSetIdentifierHandler(clientsManager, missedMessageHandler) {
     clientsManager.sendTo(identifier, 'server', JSON.stringify({ type: 'setIdentifier', identifier: identifier }));
   
     // check if there are any missed messages, if so redeliver all
-    const missedMessages = missedMessageHandler.getInstance();
-    if (missedMessages.hasMessageFor(identifier)) {
-      missedMessages.redeliver(identifier, client);
+    const missedMsgHandler = missedMessageHandler.getInstance();
+    if (missedMsgHandler.hasMessageFor(identifier)) {
+      missedMsgHandler.redeliver(identifier, client);
     }
   }
 }
-
 
 const chatServer = new Server({ 
   noServer: true, path: '/chat'
