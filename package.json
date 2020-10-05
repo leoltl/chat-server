@@ -8,15 +8,19 @@
     "start": "node bin/www.js",
     "start:dev": "nodemon bin/www.js",
     "test:watch": "jest --watch",
-    "build:client": "webpack"
+    "build:client:dev": "webpack --mode development",
+    "client:dev": "webpack --mode development --watch",
+    "build:client": "webpack --mode production"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.11.5",
     "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-spring": "^8.0.27",
     "ws": "^7.3.1"
   },
   "devDependencies": {
@@ -24,8 +28,12 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
+    "css-loader": "^4.3.0",
     "jest": "^26.4.2",
+    "node-sass": "^4.14.1",
     "nodemon": "^2.0.4",
+    "sass-loader": "^10.0.2",
+    "style-loader": "^1.2.1",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }

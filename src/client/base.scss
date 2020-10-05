@@ -1,0 +1,40 @@
+@import './reset.scss';
+
+:root {
+  --header-height: 5vh;
+  --primary-color: #3ece8d;
+  --padding-xs: 5px;
+  --padding-sm: 10px;
+  --padding-md: 25px;
+  --default-border: 1px solid #333;
+}
+
+
+.btn {
+  padding: var(--padding-xs);
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  background: none;
+  font-family: 'Montserrat', sans-serif;
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  font-size: 1.114rem;
+  color: white;
+}
+
+.btn-secondary {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.input {
+  padding: var(--padding-sm);
+  font-size: 1.05rem;
+}
