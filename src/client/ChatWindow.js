@@ -1,9 +1,9 @@
 import React from 'react';
-import ChatInput from './ChatInput';
-import ChatJoin from './ChatJoin';
-import ChatList from './ChatList';
-import ChatTabs from './ChatTabs';
-import { HOST } from '../constants';
+import ChatInput from './components/ChatInput';
+import ChatJoin from './components/ChatJoin';
+import ChatList from './components/ChatList';
+import ChatTabs from './components/ChatTabs';
+import { HOST } from './constants';
 
 import './ChatWindow.scss';
 

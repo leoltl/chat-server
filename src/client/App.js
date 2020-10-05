@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import ChatWindow from './components/ChatWindow';
+import ChatWindow from './ChatWindow';
 import useApplicationState from './hooks/useApplicationState';
 import './App.scss';
 
