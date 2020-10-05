@@ -1,4 +1,4 @@
-const MissedMessageHandler = require('./MissedMessageHandler');
+const MissedMessageHandler = require('../MissedMessageHandler/MissedMessageHandler');
 
 module.exports = function WSClientsManager() {
   const store = {}

@@ -1,8 +1,8 @@
 const { Server } = require('ws');
 
-const WSClient = require('./WSClient');
-const WSClientsManager = require('./WSClientsManager');
-const MissedMessageHandler = require('./MissedMessageHandler');
+const WSClient = require('./WSClientsManager/WSClient');
+const WSClientsManager = require('./WSClientsManager/WSClientsManager');
+const MissedMessageHandler = require('./MissedMessageHandler/MissedMessageHandler');
 const { HOST } = require('../client/constants');
 const messageStore = require('../store').getInstance();
 

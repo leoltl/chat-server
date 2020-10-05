@@ -1,5 +1,5 @@
 const WSClientsManager = require('./WSClientsManager');
-const { MissedMessageHandler } = require('./MissedMessageHandler');
+const { MissedMessageHandler } = require('../MissedMessageHandler/MissedMessageHandler');
 
 describe("WSClientsManager", () => {
 
